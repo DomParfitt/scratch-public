@@ -3,7 +3,7 @@ version: 2.1
 executors:
   foo:
     docker:
-      - image: alpine:3.18
+      - image: cimg/node:20.10
     resource_class: medium
 
   bar:
@@ -13,21 +13,22 @@ executors:
 
 jobs:
   test:
-    executor: foo
+    parameters:
+      executor:
+        type: executor
+    executor: << parameters.executor >>
     steps:
-      - run:
-          name: Install git
-          command: apk add git
       - run:
           name: Git version
           command: git version
-      - run:
-          name: Custom checkout
-          command: |
-            git clone --filter=blob:none --no-checkout https://github.com/DomParfitt/scratch-public .
-            git fetch
+      - checkout
 
 workflows:
   default:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              executor:
+                - foo
+                - bar
