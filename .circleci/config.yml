@@ -13,7 +13,7 @@ executors:
 
 jobs:
   test:
-    executor: foo
+    executor: bar
     steps:
       - run:
           name: Git version
