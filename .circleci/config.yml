@@ -16,6 +16,9 @@ jobs:
     executor: foo
     steps:
       - run:
+          name: Install git
+          command: apk add git
+      - run:
           name: Git version
           command: git version
       - run:
