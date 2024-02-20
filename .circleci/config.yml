@@ -3,7 +3,7 @@ version: 2.1
 executors:
   foo:
     docker:
-      - image: cimg/node:20.10
+      - image: alpine:3.18
     resource_class: medium
 
   bar:
@@ -13,7 +13,7 @@ executors:
 
 jobs:
   test:
-    executor: bar
+    executor: foo
     steps:
       - run:
           name: Git version
